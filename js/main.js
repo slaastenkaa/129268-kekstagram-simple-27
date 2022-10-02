@@ -5,9 +5,8 @@ function getRandomInt(min, max) {
   return NaN;
 } // https://learn.javascript.ru/number
 
-function getMaxSting(str, maxLength) {
-  //const maxStr = maxLength > 20 || maxLength < 140;
-  if(maxLength > str.length || maxLength < str.length) {
+function getMaxSting(str) {
+  if(20 < str.length || 140 < str.length) {
     return true;
   }
   return false;
