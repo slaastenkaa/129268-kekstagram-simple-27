@@ -5,11 +5,10 @@ function getRandomInt(min, max) {
   return NaN;
 } // https://learn.javascript.ru/number
 
+const MIN_STR = 20;
+const MAX_STR = 140;
 function getMaxSting(str) {
-  if(20 < str.length || 140 < str.length) {
-    return true;
-  }
-  return false;
+  return MIN_STR < str.length && str.length < MAX_STR;
 }
 
 getRandomInt();
