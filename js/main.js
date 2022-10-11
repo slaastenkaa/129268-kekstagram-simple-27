@@ -1,6 +1,6 @@
 function getRandomNumb(min, max) {
   if(0 <= min || 0 <= max) {
-    return Math.floor(Math.random() * (Math.floor(Math.min(min, max)) - Math.ceil(Math.min(min, max)) + 1) + Math.ceil(Math.min(min, max)));
+    return Math.floor(min + Math.random() * (max - min));
   }
   return NaN;
 } // https://learn.javascript.ru/number
@@ -23,11 +23,11 @@ const DESCRIPTION = [
 
 const ArrayCount = 25;
 
-const getRandomArrayElement = (element) => element[getRandomNumb(0, element.length - 1)];
+const getRandomArrayElement = (element) => element[getRandomNumb(0, element.length)];
 
 const addPhoto = () => ({
   id: getRandomArrayElement(ID),
-  url: `photos/${addPhoto.id}.jpg`,
+  url: `photos/${getRandomArrayElement(ID)}.jpg`,
   description: getRandomArrayElement(DESCRIPTION),
   likes: getRandomNumb(15, 200),
   comments: getRandomNumb(0, 200),
@@ -37,4 +37,4 @@ const getNewArray = Array.from({length: ArrayCount}, addPhoto);
 //сгенерировать случайные объекты и заполнить массив
 
 getMaxSting();
-getNewArray();
+// console.log(getNewArray);
