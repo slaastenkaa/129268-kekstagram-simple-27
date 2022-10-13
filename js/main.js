@@ -1,40 +1,4 @@
-function getRandomNumb(min, max) {
-  if(0 <= min || 0 <= max) {
-    return Math.floor(min + Math.random() * (max - min));
-  }
-  return NaN;
-} // https://learn.javascript.ru/number
+import { getNewArray } from './date.js';
 
-const MIN_STR = 20;
-const MAX_STR = 140;
-function getMaxSting(str) {
-  return MIN_STR < str.length && str.length < MAX_STR;
-}
-
-const ID = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
-
-const DESCRIPTION = [
-  'zzzzz',
-  'xxxxx',
-  'ccccc',
-  'vvvvv',
-  'bbbbb',
-];
-
-const ArrayCount = 25;
-
-const getRandomArrayElement = (element) => element[getRandomNumb(0, element.length)];
-
-const addPhoto = () => ({
-  id: getRandomArrayElement(ID),
-  url: `photos/${getRandomArrayElement(ID)}.jpg`,
-  description: getRandomArrayElement(DESCRIPTION),
-  likes: getRandomNumb(15, 200),
-  comments: getRandomNumb(0, 200),
-});
-
-const getNewArray = Array.from({length: ArrayCount}, addPhoto);
-//сгенерировать случайные объекты и заполнить массив
-
-getMaxSting();
-// console.log(getNewArray);
+// eslint-disable-next-line no-console
+console.log(getNewArray());
