@@ -15,4 +15,6 @@ function getRandomNumb(min, max) {
 
 const getRandomArrayElement = (element) => element[getRandomNumb(0, element.length)];
 
-export { getMaxSting, getRandomNumb, getRandomArrayElement };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getMaxSting, getRandomNumb, getRandomArrayElement, isEscapeKey };
