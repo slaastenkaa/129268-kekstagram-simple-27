@@ -2,20 +2,27 @@
 import { isEscapeKey } from './util.js';
 
 const body = document.body;
-const uploadFile = document.querySelector('#upload-file');
-const uploadCancel = document.querySelector('#upload-cancel');
-const imgUploadLabel = document.querySelector('.img-upload__label');
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+const uploadForm = document.querySelector('.img-upload__form');
+const uploadFile = uploadForm.querySelector('#upload-file');
+const uploadCancel = uploadForm.querySelector('#upload-cancel');
+const imgUploadLabel = uploadForm.querySelector('.img-upload__label');
+const imgUploadOverlay = uploadForm.querySelector('.img-upload__overlay');
+const textDescription = uploadForm.querySelector('.text__description');
 
 const onFormEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeForm();
+  if (textDescription === document.activeElement) {
+    return evt; // если фокус находится в поле ввода комментария
+  } else {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closeForm();
+    }
   }
 };
 
 const clearForm = () => {
   uploadFile.value = '';
+  textDescription.innerHTML = '';
 };
 
 function openForm () {
@@ -25,14 +32,16 @@ function openForm () {
     body.classList.add('modal-open');
   });
 
-  clearForm();
-
   document.addEventListener('keydown', onFormEscKeydown);
 }
 
 function closeForm () {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
+
+  clearForm();
+
+  document.removeEventListener('keydown', onFormEscKeydown);
 }
 
 imgUploadLabel.addEventListener('click', () => {
@@ -41,12 +50,4 @@ imgUploadLabel.addEventListener('click', () => {
 
 uploadCancel.addEventListener('click', () => {
   closeForm();
-  clearForm();
 });
-
-// дополнительное закрытие на любое место вне формы
-// imgUploadForm.addEventListener('click', event => {
-//   if (event.target == imgUploadOverlay && imgUploadOverlay.classList.contains('img-upload__label')) {
-//     imgUploadOverlay.classList.add('hidden');
-//   }
-// });

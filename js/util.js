@@ -1,11 +1,4 @@
 //модуль с вспомогательными функциями;
-const MIN_STR = 20;
-const MAX_STR = 140;
-
-function getMaxSting(str) {
-  return MIN_STR < str.length && str.length < MAX_STR;
-}
-
 function getRandomNumb(min, max) {
   if(0 <= min || 0 <= max) {
     return Math.floor(min + Math.random() * (max - min));
@@ -17,4 +10,4 @@ const getRandomArrayElement = (element) => element[getRandomNumb(0, element.leng
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getMaxSting, getRandomNumb, getRandomArrayElement, isEscapeKey };
+export { getRandomNumb, getRandomArrayElement, isEscapeKey };
