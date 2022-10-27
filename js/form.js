@@ -8,6 +8,8 @@ const uploadCancel = uploadForm.querySelector('#upload-cancel');
 const imgUploadLabel = uploadForm.querySelector('.img-upload__label');
 const imgUploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const textDescription = uploadForm.querySelector('.text__description');
+const uploadPreview = document.querySelector('.img-upload__preview img');
+const scaleValue = document.querySelector('.scale__control--value');
 
 const onFormEscKeydown = (evt) => {
   if (textDescription === document.activeElement) {
@@ -22,6 +24,8 @@ const onFormEscKeydown = (evt) => {
 
 const clearForm = () => {
   uploadFile.value = '';
+  scaleValue.value = '100%'; // Как можно лучше сделать, не городить лишнее?
+  uploadPreview.style.transform = 'scale(1)';
   textDescription.innerHTML = '';
 };
 
