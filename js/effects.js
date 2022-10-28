@@ -1,8 +1,18 @@
 // модуль для наложения эффекта на изображения;
+
 // const uploadEffectSlider = document.querySelector('.img-upload__effect-level');
 // const effectSlider = uploadEffectSlider.querySelector('.effect-level__slider');
 // const effectLevelValue = document.querySelector('.effect-level__value');
-// // const imgUploadPreview = document.querySelector('.img-upload__preview');
+const imgUploadPreview = document.querySelector('.img-upload__preview');
+const effects = document.querySelector('.effects');
+
+function onImgUploadPreview (evt) {
+  imgUploadPreview.classList.add(`effects__preview--${evt.target.value}`);
+}
+
+effects.addEventListener('change', onImgUploadPreview);
+
+export { effects };
 
 // effectLevelValue.value = 1;
 

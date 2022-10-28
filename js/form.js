@@ -1,5 +1,6 @@
 // модуль работы с формой
 import { isEscapeKey } from './util.js';
+import { effects } from './effects.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
@@ -26,6 +27,7 @@ const clearForm = () => {
   uploadFile.value = '';
   scaleValue.value = '100%'; // Как можно лучше сделать, не городить лишнее?
   uploadPreview.style.transform = 'scale(1)';
+  effects.classList = 'img-upload__preview';
   textDescription.innerHTML = '';
 };
 
