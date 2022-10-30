@@ -1,6 +1,6 @@
 // модуль работы с формой
 import { isEscapeKey } from './util.js';
-import { effects } from './effects.js';
+import './effects.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
@@ -11,6 +11,8 @@ const imgUploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const textDescription = uploadForm.querySelector('.text__description');
 const uploadPreview = document.querySelector('.img-upload__preview img');
 const scaleValue = document.querySelector('.scale__control--value');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const effectSlider = document.querySelector('.effect-level__slider');
 
 const onFormEscKeydown = (evt) => {
   if (textDescription === document.activeElement) {
@@ -23,11 +25,17 @@ const onFormEscKeydown = (evt) => {
   }
 };
 
-const clearForm = () => {
+const getClearForm = () => {
+  // Удаляем данные загреженного файла
   uploadFile.value = '';
-  scaleValue.value = '100%'; // Как можно лучше сделать, не городить лишнее?
+  // Размер картинки максимальный
+  scaleValue.value = '100%';
   uploadPreview.style.transform = 'scale(1)';
-  effects.classList = 'img-upload__preview';
+  // Удаление стилей и скрытие слайдера на оригинальном фото
+  imgUploadPreview.className = '';
+  imgUploadPreview.style.filter = '';
+  effectSlider.classList.add('hidden');
+  // Удаление комментариев
   textDescription.innerHTML = '';
 };
 
@@ -45,7 +53,7 @@ function closeForm () {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
 
-  clearForm();
+  getClearForm();
 
   document.removeEventListener('keydown', onFormEscKeydown);
 }

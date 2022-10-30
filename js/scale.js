@@ -12,33 +12,33 @@ let SCALE = SCALE_MAX;
 
 scaleValue.value = `${SCALE_MAX}%`;
 
-const scaleUploadPreview = () => {
+const getScalePreview = () => {
   scaleValue.value = `${SCALE}%`;
   uploadPreview.style.transform = `scale(${SCALE / 100})`;
 };
 
-const controlSmaller = () => {
+const getControlSmaller = () => {
   if (SCALE > SCALE_MIN) {
     SCALE -= SCALE_STEP;
   }
 
-  scaleUploadPreview();
+  getScalePreview();
 };
 
-const controlBigger = () => {
+const getControlBigger = () => {
   if (SCALE < SCALE_MAX) {
     SCALE += SCALE_STEP;
   }
 
-  scaleUploadPreview();
+  getScalePreview();
 };
 
 scaleSmaller.addEventListener('click', () => {
-  controlSmaller();
+  getControlSmaller();
 });
 
 scaleBigger.addEventListener('click', () => {
-  controlBigger();
+  getControlBigger();
 });
 
-export { scaleUploadPreview };
+export { getScalePreview };
