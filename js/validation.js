@@ -8,7 +8,7 @@ const MIN_STR = 20;
 const MAX_STR = 140;
 
 function getMaxSting(str) {
-  return MIN_STR < str.length && str.length < MAX_STR;
+  return MIN_STR <= str.length && str.length <= MAX_STR;
 }
 
 const pristine = new Pristine(uploadText, {
@@ -26,7 +26,7 @@ const upload = textDescription.addEventListener('input', () => {
 });
 
 
-pristine.addValidator(uploadText.querySelector('.text__description'), getMaxSting, 'Длина комментария от 20 до 140 символов');
+pristine.addValidator(uploadText.querySelector('.text__description'), getMaxSting);
 
 uploadForm.addEventListener('submit', (evt) => {
   upload();
