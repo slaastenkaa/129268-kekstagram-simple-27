@@ -13,6 +13,7 @@ function getMaxSting(str) {
 
 const pristine = new Pristine(uploadText, {
   classTo: 'img-upload__text',
+  // errorClass: ,
   errorTextParent: 'img-upload__text'
 });
 
@@ -33,3 +34,9 @@ uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
 });
+
+const resetTextDescription = () => {
+  textDescription.innerHTML = '';
+};
+
+export { resetTextDescription };

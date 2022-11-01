@@ -8,7 +8,7 @@ const scaleValue = uploadScale.querySelector('.scale__control--value');
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 const SCALE_STEP = 25;
-let SCALE = SCALE_MAX;
+let SCALE = 100;
 
 scaleValue.value = `${SCALE_MAX}%`;
 
@@ -17,7 +17,7 @@ const getScalePreview = () => {
   uploadPreview.style.transform = `scale(${SCALE / 100})`;
 };
 
-const getControlSmaller = () => {
+const onControlSmaller = () => {
   if (SCALE > SCALE_MIN) {
     SCALE -= SCALE_STEP;
   }
@@ -25,7 +25,7 @@ const getControlSmaller = () => {
   getScalePreview();
 };
 
-const getControlBigger = () => {
+const onControlBigger = () => {
   if (SCALE < SCALE_MAX) {
     SCALE += SCALE_STEP;
   }
@@ -33,12 +33,12 @@ const getControlBigger = () => {
   getScalePreview();
 };
 
-scaleSmaller.addEventListener('click', () => {
-  getControlSmaller();
-});
+scaleSmaller.addEventListener('click', onControlSmaller);
+scaleBigger.addEventListener('click', onControlBigger);
 
-scaleBigger.addEventListener('click', () => {
-  getControlBigger();
-});
+const resetScale = () => {
+  scaleValue.value = `${SCALE_MAX}%`;
+  uploadPreview.style.transform = `scale(${SCALE_MAX / 100})`;
+};
 
-export { getScalePreview };
+export { resetScale };
