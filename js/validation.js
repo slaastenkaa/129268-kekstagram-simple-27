@@ -19,24 +19,24 @@ const pristine = new Pristine(uploadText, {
 
 const upload = textDescription.addEventListener('input', () => {
   if (textDescription.value.length >= MIN_STR && textDescription.value.length <= MAX_STR) {
-    uploadSubmit.removeAttribute('disabled');
+    uploadSubmit.disabled = false;
   }
   else {
-    uploadSubmit.setAttribute('disabled', 'disabled');
+    uploadSubmit.disabled = true;
   }
 });
 
 
-pristine.addValidator(uploadText.querySelector('.text__description'), getMaxSting);
+pristine.addValidator(uploadText.querySelector('.text__description'), getMaxSting, upload);
 
 uploadForm.addEventListener('submit', (evt) => {
-  upload();
   evt.preventDefault();
   pristine.validate();
 });
 
 const resetTextDescription = () => {
+  pristine.reset();
   textDescription.innerHTML = '';
 };
 
-export { resetTextDescription };
+export { pristine, resetTextDescription };

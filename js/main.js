@@ -1,9 +1,6 @@
-import { getNewArray } from './date.js';
-import './rendering.js';
-import './form.js';
-import './validation.js';
-import './scale.js';
-import './effects.js';
+import './api.js';
+import { getData } from './api.js';
+import { renderDatePhoto } from './rendering.js';
 
+getData(renderDatePhoto);
 // eslint-disable-next-line no-console
-console.log(getNewArray());
