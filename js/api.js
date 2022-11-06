@@ -1,5 +1,6 @@
 // модуль взаимодействия c удалённым сервером с помощью fetch;
 import { closeForm, setUserFormSubmit } from './form.js';
+import { showAlert } from './util.js';
 
 // Получение данных
 const getData = (onSuccess) => {
@@ -13,6 +14,9 @@ const getData = (onSuccess) => {
     .then((response) => response.json())
     .then((date) => {
       onSuccess(date);
+    })
+    .catch(() => {
+      showAlert('Не удалось получить данные с сервера. Попробуйте позже.');
     });
 };
 
@@ -21,7 +25,7 @@ const sendData = (onSuccess, onFail, body) => {
     'https://27.javascript.pages.academy/kekstagram-simple',
     {
       method: 'POST',
-      body, //: 'formData'
+      body, //: 'formData',
     },
   ).then((response) => {
     if (response.ok) {

@@ -1,10 +1,9 @@
 // модуль работы с формой
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, showError, showSuccess } from './util.js';
 import { resetTextDescription } from './validation.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
 import { pristine } from './validation.js';
-import { showError, showSuccess } from './util.js';
 import { sendData } from './api.js';
 
 const body = document.body;
@@ -18,8 +17,10 @@ const textDescription = uploadForm.querySelector('.text__description');
 
 const onFormEscKeydown = (evt) => {
   if (textDescription === document.activeElement) {
-    return evt; // если фокус находится в поле ввода комментария
-  } else {
+    evt.stopPropagation(); // если фокус находится в поле ввода комментария или return evt
+  }
+  // else if (showError) { return evt; }
+  else {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       closeForm();
@@ -27,6 +28,7 @@ const onFormEscKeydown = (evt) => {
   }
 };
 
+// Убираем все введенные данные
 const getClearForm = () => {
   uploadFile.value = ''; // Удаляем данные загруженного файла
   resetScale();
@@ -34,6 +36,7 @@ const getClearForm = () => {
   resetTextDescription();
 };
 
+//Блокировка и разблокировка кнопки формы, на время ожидания ответа сервера
 const blockButtonSubmit = () => {
   uploadSubmit.disabled = true;
   uploadSubmit.textContent = 'Отправляю...';
@@ -45,7 +48,7 @@ const unblockButtonSubmit = () => {
 };
 
 function openForm () {
-  // когда загружаем файл
+  // Для загрузки файла
   uploadFile.addEventListener('change', () => {
     imgUploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
@@ -59,6 +62,7 @@ function closeForm () {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   getClearForm();
+  uploadForm.reset(); // Убираем все введенные данные дополнительно
 
   document.removeEventListener('keydown', onFormEscKeydown);
 }

@@ -29,28 +29,60 @@ const showSuccess = () => {
   closeSuccessMessage();
 };
 
-const onMessageEscKeydown = (evt) => {
-  if (showError === true) {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-    // closeForm();
-    }
+const onErrorMessageEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    document.body.removeChild(errorMessageTemplate);
   }
 };
+
+const onSuccessMessageEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    document.body.removeChild(successMessageTemplate);
+  }
+};
+
+const closeError = (e) => {
+  const withinBoundaries = e.composedPath().includes(errorMessageTemplate);
+
+  if (!withinBoundaries) {
+    document.body.removeChild(errorMessageTemplate);
+  }
+};
+
 
 function closeErrorMessage () {
   errorMessageButton.addEventListener('click', () => {
     document.body.removeChild(errorMessageTemplate);
   });
-  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('keydown', onErrorMessageEscKeydown, { once: true });
+
+  document.addEventListener('click', closeError);
 }
 
 function closeSuccessMessage () {
   successMessageButton.addEventListener('click', () => {
     document.body.removeChild(successMessageTemplate);
   });
-  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('keydown', onSuccessMessageEscKeydown);
 }
 
+// ошибка получения данных при загрузке с сервера
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '15px 10px';
+  alertContainer.style.fontSize = '25px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = '#ff4d4d';
+  alertContainer.textContent = message;
 
-export { getRandomNumb, getRandomArrayElement, isEscapeKey, showError, showSuccess };
+  document.body.append(alertContainer);
+};
+
+export { getRandomNumb, getRandomArrayElement, isEscapeKey, showError, showSuccess, showAlert, errorMessageTemplate };
