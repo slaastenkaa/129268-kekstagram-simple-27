@@ -2,6 +2,8 @@
 import { closeForm, setUserFormSubmit } from './form.js';
 import { showAlert } from './util.js';
 
+const uploadForm = document.querySelector('.img-upload__form');
+
 // Получение данных
 const getData = (onSuccess) => {
   fetch(
@@ -20,22 +22,24 @@ const getData = (onSuccess) => {
     });
 };
 
-const sendData = (onSuccess, onFail, body) => {
+const sendData = (onSuccess, onFail) => {
+  const formData = new FormData(uploadForm);
+
   fetch(
     'https://27.javascript.pages.academy/kekstagram-simple',
     {
       method: 'POST',
-      body, //: 'formData',
+      body: formData,
     },
   ).then((response) => {
     if (response.ok) {
       onSuccess();
     } else {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз.');
+      onFail();
     }
   })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз.');
+      onFail();
     });
 };
 

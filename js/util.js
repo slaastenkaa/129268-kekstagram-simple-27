@@ -2,11 +2,15 @@
 
 const templateErrorMessage = document.querySelector('#error').content.querySelector('.error');
 const errorMessageTemplate = templateErrorMessage.cloneNode(true);
+const errorMessageInner = errorMessageTemplate.querySelector('.error__inner');
 const errorMessageButton = errorMessageTemplate.querySelector('.error__button');
 
 const templateSuccessMessage = document.querySelector('#success').content.querySelector('.success');
 const successMessageTemplate = templateSuccessMessage.cloneNode(true);
+const successMessageInner = successMessageTemplate.querySelector('.success__inner');
 const successMessageButton = successMessageTemplate.querySelector('.success__button');
+
+const ALERT_SHOW_TIME = 10000;
 
 function getRandomNumb(min, max) {
   if(0 <= min || 0 <= max) {
@@ -43,22 +47,26 @@ const onSuccessMessageEscKeydown = (evt) => {
   }
 };
 
-const closeError = (e) => {
-  const withinBoundaries = e.composedPath().includes(errorMessageTemplate);
-
-  if (!withinBoundaries) {
+const onErrorMessageClickClose = (evt) => {
+  const onOutSideClick = evt.composedPath().includes(errorMessageInner);
+  if (!onOutSideClick) {
     document.body.removeChild(errorMessageTemplate);
   }
 };
 
+const onSuccessMessageClickClose = (evt) => {
+  const onOutSideClick = evt.composedPath().includes(successMessageInner);
+  if (!onOutSideClick) {
+    document.body.removeChild(successMessageTemplate);
+  }
+};
 
 function closeErrorMessage () {
   errorMessageButton.addEventListener('click', () => {
     document.body.removeChild(errorMessageTemplate);
   });
   document.addEventListener('keydown', onErrorMessageEscKeydown, { once: true });
-
-  document.addEventListener('click', closeError);
+  document.addEventListener('click', onErrorMessageClickClose);
 }
 
 function closeSuccessMessage () {
@@ -66,6 +74,7 @@ function closeSuccessMessage () {
     document.body.removeChild(successMessageTemplate);
   });
   document.addEventListener('keydown', onSuccessMessageEscKeydown);
+  document.addEventListener('click', onSuccessMessageClickClose);
 }
 
 // ошибка получения данных при загрузке с сервера
@@ -83,6 +92,10 @@ const showAlert = (message) => {
   alertContainer.textContent = message;
 
   document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
 
 export { getRandomNumb, getRandomArrayElement, isEscapeKey, showError, showSuccess, showAlert, errorMessageTemplate };
