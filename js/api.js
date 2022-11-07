@@ -2,12 +2,15 @@
 import { closeForm, setUserFormSubmit } from './form.js';
 import { showAlert } from './util.js';
 
+const GET_DATA = 'https://27.javascript.pages.academy/kekstagram-simple/data';
+const SEND_DATA = 'https://27.javascript.pages.academy/kekstagram-simple';
+
 const uploadForm = document.querySelector('.img-upload__form');
 
 // Получение данных
 const getData = (onSuccess) => {
   fetch(
-    'https://27.javascript.pages.academy/kekstagram-simple/data', //функция, а она вернёт промис
+    GET_DATA,
     {
       method: 'GET',
       credentials: 'same-origin',
@@ -26,7 +29,7 @@ const sendData = (onSuccess, onFail) => {
   const formData = new FormData(uploadForm);
 
   fetch(
-    'https://27.javascript.pages.academy/kekstagram-simple',
+    SEND_DATA,
     {
       method: 'POST',
       body: formData,

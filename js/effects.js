@@ -1,9 +1,4 @@
 // модуль для наложения эффекта на изображения;
-const effectSlider = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const effects = document.querySelector('.effects');
-
 const EFFECTS = {
   none: {
     filter: 'none',
@@ -72,6 +67,11 @@ const EFFECTS = {
   },
 };
 
+const effectSlider = document.querySelector('.effect-level__slider');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const effects = document.querySelector('.effects');
+
 const resetEffects = () => {
   imgUploadPreview.className = '';
   imgUploadPreview.style.filter = 'none';
@@ -106,7 +106,7 @@ const getEffects = (evt) => {
 
 effects.addEventListener('change', getEffects);
 
-// Применение эффекта для изображение
+// Применение эффекта для изображения
 // function onImgUploadPreview (evt) {
 //   if (evt.target.value === 'none') {
 //     imgUploadPreview.className = '';

@@ -1,4 +1,5 @@
 //модуль с вспомогательными функциями;
+const ALERT_SHOW_TIME = 10000;
 
 const templateErrorMessage = document.querySelector('#error').content.querySelector('.error');
 const errorMessageTemplate = templateErrorMessage.cloneNode(true);
@@ -9,17 +10,6 @@ const templateSuccessMessage = document.querySelector('#success').content.queryS
 const successMessageTemplate = templateSuccessMessage.cloneNode(true);
 const successMessageInner = successMessageTemplate.querySelector('.success__inner');
 const successMessageButton = successMessageTemplate.querySelector('.success__button');
-
-const ALERT_SHOW_TIME = 10000;
-
-function getRandomNumb(min, max) {
-  if(0 <= min || 0 <= max) {
-    return Math.floor(min + Math.random() * (max - min));
-  }
-  return NaN;
-} // https://learn.javascript.ru/number
-
-const getRandomArrayElement = (element) => element[getRandomNumb(0, element.length)];
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -98,4 +88,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { getRandomNumb, getRandomArrayElement, isEscapeKey, showError, showSuccess, showAlert, errorMessageTemplate };
+export { isEscapeKey, showError, showSuccess, showAlert };

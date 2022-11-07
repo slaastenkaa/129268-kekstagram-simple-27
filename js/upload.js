@@ -1,8 +1,8 @@
 // предпросмотр новой выбранной пользователем фотографии;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const imgUpload = document.querySelector('#upload-file');
 const imgPreview = document.querySelector('.img-upload__preview img');
-
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 imgUpload.addEventListener('change', () => {
   const file = imgUpload.files[0];
