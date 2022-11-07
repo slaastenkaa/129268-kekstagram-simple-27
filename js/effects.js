@@ -1,21 +1,4 @@
 // модуль для наложения эффекта на изображения;
-
-const effectSlider = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const effects = document.querySelector('.effects');
-
-// Применение эффекта для изображение
-// function onImgUploadPreview (evt) {
-//   if (evt.target.value === 'none') {
-//     imgUploadPreview.className = '';
-//   }
-//   else {
-//     imgUploadPreview.classList.add(`effects__preview--${evt.target.value}`);
-//   }
-// }
-// effects.addEventListener('change', onImgUploadPreview);
-
 const EFFECTS = {
   none: {
     filter: 'none',
@@ -84,15 +67,23 @@ const EFFECTS = {
   },
 };
 
+const effectSlider = document.querySelector('.effect-level__slider');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const effects = document.querySelector('.effects');
+
+const resetEffects = () => {
+  imgUploadPreview.className = '';
+  imgUploadPreview.style.filter = 'none';
+  effectSlider.classList.add('hidden');
+};
+
 const getEffects = (evt) => {
   const currentFilters = evt.target.value;
   effectSlider.classList.remove('hidden');
 
-  // Очитска стилей и скрытие слайдера на оригинальном фото
   if (currentFilters === 'none') {
-    imgUploadPreview.className = '';
-    imgUploadPreview.style.filter = '';
-    effectSlider.classList.add('hidden');
+    resetEffects();
   }
 
   //  Удаление слайдера при переключении вкладок
@@ -114,3 +105,16 @@ const getEffects = (evt) => {
 };
 
 effects.addEventListener('change', getEffects);
+
+// Применение эффекта для изображения
+// function onImgUploadPreview (evt) {
+//   if (evt.target.value === 'none') {
+//     imgUploadPreview.className = '';
+//   }
+//   else {
+//     imgUploadPreview.classList.add(`effects__preview--${evt.target.value}`);
+//   }
+// }
+// effects.addEventListener('change', onImgUploadPreview);
+
+export { resetEffects };

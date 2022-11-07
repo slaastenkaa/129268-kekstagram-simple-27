@@ -1,23 +1,26 @@
 // модуль работы с формой
-import { isEscapeKey } from './util.js';
-import './effects.js';
+import { isEscapeKey, showError, showSuccess } from './util.js';
+import { resetTextDescription } from './validation.js';
+import { resetScale } from './scale.js';
+import { resetEffects } from './effects.js';
+import { pristine } from './validation.js';
+import { sendData } from './api.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadFile = uploadForm.querySelector('#upload-file');
 const uploadCancel = uploadForm.querySelector('#upload-cancel');
+const uploadSubmit = uploadForm.querySelector('.img-upload__submit');
 const imgUploadLabel = uploadForm.querySelector('.img-upload__label');
 const imgUploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const textDescription = uploadForm.querySelector('.text__description');
-const uploadPreview = document.querySelector('.img-upload__preview img');
-const scaleValue = document.querySelector('.scale__control--value');
-const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const effectSlider = document.querySelector('.effect-level__slider');
 
 const onFormEscKeydown = (evt) => {
   if (textDescription === document.activeElement) {
-    return evt; // если фокус находится в поле ввода комментария
-  } else {
+    evt.stopPropagation(); // если фокус находится в поле ввода комментария или return evt
+  }
+  // else if (showError) { return evt; }
+  else {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       closeForm();
@@ -25,25 +28,31 @@ const onFormEscKeydown = (evt) => {
   }
 };
 
+// Убираем все введенные данные
 const getClearForm = () => {
-  // Удаляем данные загреженного файла
-  uploadFile.value = '';
-  // Размер картинки максимальный
-  scaleValue.value = '100%';
-  uploadPreview.style.transform = 'scale(1)';
-  // Удаление стилей и скрытие слайдера на оригинальном фото
-  imgUploadPreview.className = '';
-  imgUploadPreview.style.filter = '';
-  effectSlider.classList.add('hidden');
-  // Удаление комментариев
-  textDescription.innerHTML = '';
+  uploadFile.value = ''; // Удаляем данные загруженного файла
+  resetScale();
+  resetEffects();
+  resetTextDescription();
+};
+
+//Блокировка и разблокировка кнопки формы, на время ожидания ответа сервера
+const blockButtonSubmit = () => {
+  uploadSubmit.disabled = true;
+  uploadSubmit.textContent = 'Отправляю...';
+};
+
+const unblockButtonSubmit = () => {
+  uploadSubmit.disabled = false;
+  uploadSubmit.textContent = 'Отправить';
 };
 
 function openForm () {
-  // когда загружаем файл
+  // Для загрузки файла
   uploadFile.addEventListener('change', () => {
     imgUploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
+    resetScale();
   });
 
   document.addEventListener('keydown', onFormEscKeydown);
@@ -52,16 +61,37 @@ function openForm () {
 function closeForm () {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-
   getClearForm();
+  uploadForm.reset(); // Убираем все введенные данные дополнительно
 
   document.removeEventListener('keydown', onFormEscKeydown);
 }
 
-imgUploadLabel.addEventListener('click', () => {
-  openForm();
-});
+imgUploadLabel.addEventListener('click', openForm);
+uploadCancel.addEventListener('click', closeForm);
 
-uploadCancel.addEventListener('click', () => {
-  closeForm();
-});
+// отправка данных
+const setUserFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockButtonSubmit();
+      sendData(
+        () => {
+          onSuccess();
+          showSuccess('Успешно');
+          unblockButtonSubmit();
+        },
+        () => {
+          showError('Не удалось отправить форму. Попробуйте ещё раз');
+          unblockButtonSubmit();
+        },
+        new FormData(evt.target),
+      );
+    }
+  });
+};
+
+export { openForm, closeForm, setUserFormSubmit };
