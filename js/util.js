@@ -80,7 +80,6 @@ const showAlert = (message) => {
   alertContainerElement.style.textAlign = 'center';
   alertContainerElement.style.backgroundColor = '#ff4d4d';
   alertContainerElement.textContent = message;
-
   document.body.append(alertContainerElement);
 
   setTimeout(() => {
