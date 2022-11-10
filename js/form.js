@@ -6,17 +6,17 @@ import { resetEffects } from './effects.js';
 import { pristine } from './validation.js';
 import { sendData } from './api.js';
 
-const body = document.body;
-const uploadForm = document.querySelector('.img-upload__form');
-const uploadFile = uploadForm.querySelector('#upload-file');
-const uploadCancel = uploadForm.querySelector('#upload-cancel');
-const uploadSubmit = uploadForm.querySelector('.img-upload__submit');
-const imgUploadLabel = uploadForm.querySelector('.img-upload__label');
-const imgUploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-const textDescription = uploadForm.querySelector('.text__description');
+const bodyElement = document.body;
+const uploadFormElement = document.querySelector('.img-upload__form');
+const uploadFileElement = uploadFormElement.querySelector('#upload-file');
+const uploadCancelElement = uploadFormElement.querySelector('#upload-cancel');
+const uploadSubmitElement = uploadFormElement.querySelector('.img-upload__submit');
+const imgUploadLabelElement = uploadFormElement.querySelector('.img-upload__label');
+const imgUploadOverlayElement = uploadFormElement.querySelector('.img-upload__overlay');
+const textDescriptionElement = uploadFormElement.querySelector('.text__description');
 
 const onFormEscKeydown = (evt) => {
-  if (textDescription === document.activeElement) {
+  if (textDescriptionElement === document.activeElement) {
     evt.stopPropagation(); // если фокус находится в поле ввода комментария или return evt
   }
   // else if (showError) { return evt; }
@@ -30,7 +30,7 @@ const onFormEscKeydown = (evt) => {
 
 // Убираем все введенные данные
 const getClearForm = () => {
-  uploadFile.value = ''; // Удаляем данные загруженного файла
+  uploadFileElement.value = ''; // Удаляем данные загруженного файла
   resetScale();
   resetEffects();
   resetTextDescription();
@@ -38,20 +38,20 @@ const getClearForm = () => {
 
 //Блокировка и разблокировка кнопки формы, на время ожидания ответа сервера
 const blockButtonSubmit = () => {
-  uploadSubmit.disabled = true;
-  uploadSubmit.textContent = 'Отправляю...';
+  uploadSubmitElement.disabled = true;
+  uploadSubmitElement.textContent = 'Отправляю...';
 };
 
 const unblockButtonSubmit = () => {
-  uploadSubmit.disabled = false;
-  uploadSubmit.textContent = 'Отправить';
+  uploadSubmitElement.disabled = false;
+  uploadSubmitElement.textContent = 'Отправить';
 };
 
 function openForm () {
   // Для загрузки файла
-  uploadFile.addEventListener('change', () => {
-    imgUploadOverlay.classList.remove('hidden');
-    body.classList.add('modal-open');
+  uploadFileElement.addEventListener('change', () => {
+    imgUploadOverlayElement.classList.remove('hidden');
+    bodyElement.classList.add('modal-open');
     resetScale();
   });
 
@@ -59,20 +59,20 @@ function openForm () {
 }
 
 function closeForm () {
-  imgUploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  imgUploadOverlayElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
   getClearForm();
-  uploadForm.reset(); // Убираем все введенные данные дополнительно
+  uploadFormElement.reset(); // Убираем все введенные данные дополнительно
 
   document.removeEventListener('keydown', onFormEscKeydown);
 }
 
-imgUploadLabel.addEventListener('click', openForm);
-uploadCancel.addEventListener('click', closeForm);
+imgUploadLabelElement.addEventListener('click', openForm);
+uploadCancelElement.addEventListener('click', closeForm);
 
 // отправка данных
 const setUserFormSubmit = (onSuccess) => {
-  uploadForm.addEventListener('submit', (evt) => {
+  uploadFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();

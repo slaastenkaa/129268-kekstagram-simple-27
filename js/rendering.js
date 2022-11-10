@@ -1,17 +1,17 @@
 //модуль отрисовки миниатюр;
-const pictures = document.querySelector('.pictures');
-const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
-const newFragmentPicture = document.createDocumentFragment();
+const picturesElement = document.querySelector('.pictures');
+const templatePictureElement = document.querySelector('#picture').content.querySelector('.picture');
+const newFragmentPictureElement = document.createDocumentFragment();
 
 const renderDatePhoto = (renderPhotos) => {
   renderPhotos.forEach((renderPhoto) => {
-    const photoElement = templatePicture.cloneNode(true);
+    const photoElement = templatePictureElement.cloneNode(true);
     photoElement.querySelector('.picture__img').src = renderPhoto.url;
     photoElement.querySelector('.picture__comments').textContent = renderPhoto.comments;
     photoElement.querySelector('.picture__likes').textContent = renderPhoto.likes;
-    newFragmentPicture.appendChild(photoElement);
+    newFragmentPictureElement.appendChild(photoElement);
   });
-  pictures.appendChild(newFragmentPicture);
+  picturesElement.appendChild(newFragmentPictureElement);
 };
 
 export { renderDatePhoto };

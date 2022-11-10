@@ -5,7 +5,7 @@ import { showAlert } from './util.js';
 const GET_DATA = 'https://27.javascript.pages.academy/kekstagram-simple/data';
 const SEND_DATA = 'https://27.javascript.pages.academy/kekstagram-simple';
 
-const uploadForm = document.querySelector('.img-upload__form');
+const uploadFormElement = document.querySelector('.img-upload__form');
 
 // Получение данных
 const getData = (onSuccess) => {
@@ -26,7 +26,7 @@ const getData = (onSuccess) => {
 };
 
 const sendData = (onSuccess, onFail) => {
-  const formData = new FormData(uploadForm);
+  const formData = new FormData(uploadFormElement);
 
   fetch(
     SEND_DATA,

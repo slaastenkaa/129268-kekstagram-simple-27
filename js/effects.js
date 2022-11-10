@@ -67,54 +67,43 @@ const EFFECTS = {
   },
 };
 
-const effectSlider = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const effects = document.querySelector('.effects');
+const effectSliderElement = document.querySelector('.effect-level__slider');
+const effectLevelValueElement = document.querySelector('.effect-level__value');
+const imgUploadPreviewElement = document.querySelector('.img-upload__preview img');
+const effectsElement = document.querySelector('.effects');
 
 const resetEffects = () => {
-  imgUploadPreview.className = '';
-  imgUploadPreview.style.filter = 'none';
-  effectSlider.classList.add('hidden');
+  imgUploadPreviewElement.className = '';
+  imgUploadPreviewElement.style.filter = 'none';
+  effectSliderElement.classList.add('hidden');
 };
 
 const getEffects = (evt) => {
   const currentFilters = evt.target.value;
-  effectSlider.classList.remove('hidden');
+  effectSliderElement.classList.remove('hidden');
 
   if (currentFilters === 'none') {
     resetEffects();
   }
 
   //  Удаление слайдера при переключении вкладок
-  if (effectSlider.noUiSlider) {
-    effectSlider.noUiSlider.destroy();
+  if (effectSliderElement.noUiSlider) {
+    effectSliderElement.noUiSlider.destroy();
   }
 
   // Создание слайдера используя метод глобального объекта noUiSlider с добавлением текущего фильтра
-  noUiSlider.create(effectSlider, EFFECTS[currentFilters]);
+  noUiSlider.create(effectSliderElement, EFFECTS[currentFilters]);
   // Добавление класса с эффектом
-  imgUploadPreview.className = `effects__preview--${currentFilters}`;
+  imgUploadPreviewElement.className = `effects__preview--${currentFilters}`;
 
   // Изменение уровня интенсивности эффекта
-  effectSlider.noUiSlider.on('update', (element) => {
-    imgUploadPreview.style.filter = `${EFFECTS[currentFilters].filter}(${element}${EFFECTS[currentFilters].unit})`;
+  effectSliderElement.noUiSlider.on('update', (element) => {
+    imgUploadPreviewElement.style.filter = `${EFFECTS[currentFilters].filter}(${element}${EFFECTS[currentFilters].unit})`;
     // Записываем округленное значение в input
-    effectLevelValue.value = parseFloat(element);
+    effectLevelValueElement.value = parseFloat(element);
   });
 };
 
-effects.addEventListener('change', getEffects);
-
-// Применение эффекта для изображения
-// function onImgUploadPreview (evt) {
-//   if (evt.target.value === 'none') {
-//     imgUploadPreview.className = '';
-//   }
-//   else {
-//     imgUploadPreview.classList.add(`effects__preview--${evt.target.value}`);
-//   }
-// }
-// effects.addEventListener('change', onImgUploadPreview);
+effectsElement.addEventListener('change', getEffects);
 
 export { resetEffects };
