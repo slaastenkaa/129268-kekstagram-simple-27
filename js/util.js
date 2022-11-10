@@ -1,67 +1,67 @@
 //модуль с вспомогательными функциями;
 const ALERT_SHOW_TIME = 10000;
 
-const templateErrorMessage = document.querySelector('#error').content.querySelector('.error');
-const errorMessageTemplate = templateErrorMessage.cloneNode(true);
-const errorMessageInner = errorMessageTemplate.querySelector('.error__inner');
-const errorMessageButton = errorMessageTemplate.querySelector('.error__button');
+const templateErrorMessageElement = document.querySelector('#error').content.querySelector('.error');
+const errorMessageTemplateElement = templateErrorMessageElement.cloneNode(true);
+const errorMessageInnerElement = errorMessageTemplateElement.querySelector('.error__inner');
+const errorMessageButtonElement = errorMessageTemplateElement.querySelector('.error__button');
 
-const templateSuccessMessage = document.querySelector('#success').content.querySelector('.success');
-const successMessageTemplate = templateSuccessMessage.cloneNode(true);
-const successMessageInner = successMessageTemplate.querySelector('.success__inner');
-const successMessageButton = successMessageTemplate.querySelector('.success__button');
+const templateSuccessMessageElement = document.querySelector('#success').content.querySelector('.success');
+const successMessageTemplateElement = templateSuccessMessageElement.cloneNode(true);
+const successMessageInnerElement = successMessageTemplateElement.querySelector('.success__inner');
+const successMessageButtonElement = successMessageTemplateElement.querySelector('.success__button');
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const showError = () => {
-  document.body.append(errorMessageTemplate);
+  document.body.append(errorMessageTemplateElement);
   closeErrorMessage();
 };
 
 const showSuccess = () => {
-  document.body.append(successMessageTemplate);
+  document.body.append(successMessageTemplateElement);
   closeSuccessMessage();
 };
 
 const onErrorMessageEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    document.body.removeChild(errorMessageTemplate);
+    document.body.removeChild(errorMessageTemplateElement);
   }
 };
 
 const onSuccessMessageEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    document.body.removeChild(successMessageTemplate);
+    document.body.removeChild(successMessageTemplateElement);
   }
 };
 
 const onErrorMessageClickClose = (evt) => {
-  const onOutSideClick = evt.composedPath().includes(errorMessageInner);
+  const onOutSideClick = evt.composedPath().includes(errorMessageInnerElement);
   if (!onOutSideClick) {
-    document.body.removeChild(errorMessageTemplate);
+    document.body.removeChild(errorMessageTemplateElement);
   }
 };
 
 const onSuccessMessageClickClose = (evt) => {
-  const onOutSideClick = evt.composedPath().includes(successMessageInner);
+  const onOutSideClick = evt.composedPath().includes(successMessageInnerElement);
   if (!onOutSideClick) {
-    document.body.removeChild(successMessageTemplate);
+    document.body.removeChild(successMessageTemplateElement);
   }
 };
 
 function closeErrorMessage () {
-  errorMessageButton.addEventListener('click', () => {
-    document.body.removeChild(errorMessageTemplate);
+  errorMessageButtonElement.addEventListener('click', () => {
+    document.body.removeChild(errorMessageTemplateElement);
   });
   document.addEventListener('keydown', onErrorMessageEscKeydown, { once: true });
   document.addEventListener('click', onErrorMessageClickClose);
 }
 
 function closeSuccessMessage () {
-  successMessageButton.addEventListener('click', () => {
-    document.body.removeChild(successMessageTemplate);
+  successMessageButtonElement.addEventListener('click', () => {
+    document.body.removeChild(successMessageTemplateElement);
   });
   document.addEventListener('keydown', onSuccessMessageEscKeydown);
   document.addEventListener('click', onSuccessMessageClickClose);
@@ -69,22 +69,22 @@ function closeSuccessMessage () {
 
 // ошибка получения данных при загрузке с сервера
 const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = '100';
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = '0';
-  alertContainer.style.top = '0';
-  alertContainer.style.right = '0';
-  alertContainer.style.padding = '15px 10px';
-  alertContainer.style.fontSize = '25px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = '#ff4d4d';
-  alertContainer.textContent = message;
+  const alertContainerElement = document.createElement('div');
+  alertContainerElement.style.zIndex = '100';
+  alertContainerElement.style.position = 'absolute';
+  alertContainerElement.style.left = '0';
+  alertContainerElement.style.top = '0';
+  alertContainerElement.style.right = '0';
+  alertContainerElement.style.padding = '15px 10px';
+  alertContainerElement.style.fontSize = '25px';
+  alertContainerElement.style.textAlign = 'center';
+  alertContainerElement.style.backgroundColor = '#ff4d4d';
+  alertContainerElement.textContent = message;
 
-  document.body.append(alertContainer);
+  document.body.append(alertContainerElement);
 
   setTimeout(() => {
-    alertContainer.remove();
+    alertContainerElement.remove();
   }, ALERT_SHOW_TIME);
 };
 
